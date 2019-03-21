@@ -18,6 +18,8 @@ class UserAdapterViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(User user) {
-        userItemTextView.setText(user.getTitle());
+        userItemTextView.setText(user.getTitle()
+                .concat(", ")
+                .concat(Integer.toString(user.getId_())));
     }
 }

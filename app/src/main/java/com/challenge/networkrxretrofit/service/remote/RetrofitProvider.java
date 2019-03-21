@@ -1,4 +1,4 @@
-package com.challenge.networkrxretrofit.service;
+package com.challenge.networkrxretrofit.service.remote;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 

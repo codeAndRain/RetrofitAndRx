@@ -1,4 +1,4 @@
-package com.challenge.networkrxretrofit.service;
+package com.challenge.networkrxretrofit.service.remote;
 
 import com.challenge.networkrxretrofit.model.User;
 

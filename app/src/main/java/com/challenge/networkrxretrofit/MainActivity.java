@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.challenge.networkrxretrofit.repo.Repository;
 
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        repository = new Repository();
+        repository = new Repository(this);
 
         initViews();
     }
@@ -55,9 +56,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .doOnSuccess(todoList -> progressBar.setVisibility(View.GONE))
                 .subscribe(userList -> {
                     adapter.setUserItems(userList);
+                    repository.insertUsers(userList);
                 }, throwable -> {
                     Log.d("TAG_1", throwable.getMessage());
                     progressBar.setVisibility(View.GONE);
+                }));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        disposable.add(repository.getLocalUserList()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(users -> {
+                    if (!users.isEmpty()) {
+                        adapter.setUserItems(users);
+                    }
+                    else {
+                        Toast.makeText(this, "Empty Database", Toast.LENGTH_SHORT).show();
+                    }
                 }));
     }
 

@@ -1,9 +1,17 @@
 package com.challenge.networkrxretrofit.model;
 
+import com.google.gson.annotations.SerializedName;
+
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "user_table")
 public class User {
 
+    @PrimaryKey
+    @SerializedName("id")
+    private int id_;
     private int userId;
-    private int id;
     private String title;
     private boolean completed;
 
@@ -23,10 +31,18 @@ public class User {
      */
     public User(int userId, int id, String title, boolean completed) {
         super();
-        this.userId = userId;
-        this.id = id;
+        this.id_ = userId;
+        this.userId = id;
         this.title = title;
         this.completed = completed;
+    }
+
+    public int getId_() {
+        return id_;
+    }
+
+    public void setId_(int id_) {
+        this.id_ = id_;
     }
 
     public int getUserId() {
@@ -35,14 +51,6 @@ public class User {
 
     public void setUserId(int userId) {
         this.userId = userId;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getTitle() {
